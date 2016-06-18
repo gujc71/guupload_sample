@@ -77,6 +77,29 @@ function uploadStart(file) {
 	return true;
 }
 
+function uploadProgress(file, bytesLoaded, bytesTotal) {
+	try {
+		var percent = Math.ceil((bytesLoaded / bytesTotal) * 100);
+
+		var progress = new FileProgress(file, this.customSettings.progressTarget);
+		progress.setProgress(percent);
+		progress.setStatus("Uploading...");
+	} catch (ex) {
+		this.debug(ex);
+	}
+}
+
+function uploadSuccess1(file, serverData) {
+	try {
+		var progress = new FileProgress(file, this.customSettings.progressTarget);
+		progress.setComplete();
+		progress.setStatus("Complete.");
+		progress.toggleCancel(false);
+	} catch (ex) {
+		this.debug(ex);
+	}
+}
+
 function uploadError(file, errorCode, message) {
 	try {
 		var progress = new FileProgress(file, this.customSettings.progressTarget);

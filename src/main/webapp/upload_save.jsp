@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head>
 <title>File Upload Demos</title>
@@ -26,7 +26,7 @@
 		<tr>
 			<td>Attach File</td>
 			<td>
-			<%
+			<% 
 				String filename = request.getParameter("filename");
 				String realname = request.getParameter("realname");
 				String filesize = request.getParameter("filesize");
@@ -35,7 +35,7 @@
 		    	String[] sizelist = filesize.split(",");
 		    	
 		    	for (int i=0; i<filelist.length; i++) {
-		    	    out.println(filelist[i] + ":" + reallist[i] + ":" + sizelist[i] + "<br/>");
+		    	    out.println(filelist[i] + " : " + reallist[i] + " : " + sizelist[i] + "<br/>");
 		    	}				
 			%>
 			</td>

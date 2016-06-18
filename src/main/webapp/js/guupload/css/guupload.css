@@ -1,10 +1,110 @@
+.guupload {
+	font-size: 10pt;
+}
 
 .guFileList {
-	overflow:auto;
+	overflow-y: scroll;
 	width: 100%;
 	border:1px solid #999999;
 }
 
+.guFileList_thumbnail {
+	overflow-x: scroll;
+	overflow-y: hidden;
+	width: 100%;
+	border:1px solid #999999;
+	white-space: nowrap;
+}
+ 
+/* -- gu-upload Styles ------------------------------- */
+.guFileList .filerow {  /* SWFUpload: progressWrapper+ progressContainer*/ 
+	overflow: hidden;
+	margin: 1px;
+	padding: 1px;
+	border: solid 1px #E8E8E8;
+	background-color: #F7F7F7;
+}
+
+.guFileList_thumbnail .filerow {
+	width: 100px;
+	height: 91%;
+	overflow: hidden;
+	margin: 3px;
+	padding: 1px;
+	border: solid 1px #E8E8E8;
+	background-color: #F7F7F7;
+	display: inline-block;
+}
+
+.guFileList .filename { /*SWFUpload: progressName*/
+	float: left;
+	color: #555;
+	width: 75%;
+	text-align: left;
+	white-space: nowrap;
+	overflow: hidden;
+}
+ 
+.guFileList_thumbnail .filename{ 
+	width: 100%;
+	height: 75%;
+	overflow: hidden;
+	border-radius: 5px;
+}
+
+.guFileList_thumbnail .noimage{
+	text-align: center;
+	line-height: 500%;
+	font-weight: bold;
+	color: #3446EB;
+	background-image: url(file.png);
+	background-repeat: no-repeat;
+	background-position:center;
+}
+
+.guFileList .filerow .filesizeContainer { /*SWFUpload: progressBarStatus*/
+	float: left;
+	margin-top: 2px;
+	width: 24%;
+	white-space: nowrap;
+	text-align: right;
+}
+.guFileList_thumbnail .filerow .filesizeContainer { /*SWFUpload: progressBarStatus*/
+	margin-top: 2px;
+	width: 100%;
+	white-space: nowrap;
+}
+
+.guFileList .filerow .filesize { 
+	margin-top: 2px;
+	margin-right: 20px;
+	width: auto;
+	text-align: right;
+}
+
+.guFileList_thumbnail .filerow .filesize { 
+	margin-top: 2px;
+	margin-right: 20px;
+	width: auto;
+	text-align: center;
+	overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+}
+
+.filerow .fileremove {	/*SWFUpload: a.progressCancel*/
+	float: right;
+	height: 14px;
+	width: 14px;
+	background-image: url(cancelbutton.gif);
+	background-repeat: no-repeat;
+	background-position: -14px 0px;	
+}
+
+.filerow .progressBar {
+	width: 0%;
+	background-color: #337ab7;
+}
+
+/* -- SWFUpload Object Styles ------------------------------- */
 .progressWrapper {
 	overflow: hidden;
 }
@@ -46,7 +146,7 @@
 	float: left;
 	font-size: 9pt;
 	color: #555;
-	width: 80%;
+	width: 75%;
 	text-align: left;
 	white-space: nowrap;
 	overflow: hidden;
@@ -100,7 +200,6 @@ a.progressCancel:hover {
 }
 
 
-/* -- SWFUpload Object Styles ------------------------------- */
 _.swfupload {
 	vertical-align: top;
 }
@@ -112,7 +211,6 @@ _.swfupload {
     border-style: solid;
     border-width: 1px;
     background: url("bg_uploadhead.gif") repeat-x scroll 0 0 rgba(0, 0, 0, 0);
-    font-size: 9x;
     height: 18px;
     letter-spacing: -1px;
     line-height: 18px;

@@ -209,7 +209,17 @@ FileProgress.prototype.disappear = function () {
 
 // add by gu
 function formatFileSize(bytes) {
-	if (bytes == 0) { return "0 B"; }
-	var e = Math.floor(Math.log(bytes) / Math.log(1024));
-	return (bytes/Math.pow(1024, e)).toFixed(2)+' '+' KMGTP'.charAt(e)+'B';
+        if (typeof bytes !== 'number') {
+            return '';
+        }
+
+        if (bytes >= 1024*1024*1024) {
+            return (bytes / (1024*1024*1024)).toFixed(0) + ' GB';
+        }
+
+        if (bytes >= 1024*1024) {
+            return (bytes / (1024*1024)).toFixed(0) + ' MB';
+        }
+
+        return (bytes / 1024).toFixed(0) + ' KB';
 }
