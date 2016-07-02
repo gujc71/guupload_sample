@@ -32,10 +32,11 @@ function fileRecord (oid, ofile){
 	this.file=ofile;
 	this.uploaded=0;		// 0:ready, 1: uploading, 2: uploaded
 	this.progressbar=null;
-};
+}
+
 
 GUUpload.prototype.AddFiles = function (files) {
-	if (this.fileCount==0){
+	if (this.fileCount===0){
 		var fileListview = document.getElementById(this.settings.fileListview);
 		fileListview.innerHTML = "";
 	}
@@ -79,7 +80,8 @@ GUUpload.prototype.AddRow = function (file) {
 	filesize.innerHTML = formatFileSize(file.size);
 	file.progressbar = filesize;
 	
-}
+};
+
 
 GUUpload.prototype.AddRowThunbnail = function (file) {
 	var parent = document.getElementById(this.settings.fileListview);
@@ -109,16 +111,20 @@ GUUpload.prototype.AddRowThunbnail = function (file) {
 	filesize.innerHTML = file.name;//formatFileSize(file.size);
 	file.progressbar = filesize;
 	
-}
+};
+
 
 GUUpload.prototype.readImage = function (file, img) {
     if (!file) return;
     var reader = new FileReader();
     reader.onload = function (e) {
     	img.setAttribute("src", e.target.result);
-    }
+    };
+
     reader.readAsDataURL(file);
-}
+};
+
+
 GUUpload.prototype.fileRemoveClick = function () {
 	var fileid = this.id;
 	fileid = fileid.substring(1, fileid.length); 
@@ -174,7 +180,8 @@ function ajaxProgress(evt) {
 		var file = GUUpload.instances.getFileInfo(this.id);
 		GUUpload.instances.queueEvent("upload_progress_handler", [file, evt.loaded, evt.total]);
 	}
-};
+}
+
 
 function ajaxReadyStateChange() {
     if (this.readyState === 4) {
@@ -186,14 +193,15 @@ function ajaxReadyStateChange() {
 			alert('There was a problem with the request.');
 		}
     }
-};
+}
+
 
 GUUpload.prototype.getFileInfo = function (id) {
-	return this.fileList[id]
+	return this.fileList[id];
 };
 
 GUUpload.prototype.queueEvent = function (handlerName, argumentArray) {
-	if (argumentArray == undefined) {
+	if (argumentArray === undefined) {
 		argumentArray = [];
 	} else if (!(argumentArray instanceof Array)) {
 		argumentArray = [argumentArray];
@@ -215,7 +223,8 @@ function addEvent(evnt, elem, func) {
    } else { // No much to do
       elem[evnt] = func;
    }
-};
+}
+
 
 GUUpload.prototype.changeEvent = function (event) {
 	GUUpload.instances.AddFiles(event.target.files);
@@ -243,7 +252,7 @@ function uploadProgress(file, bytesLoaded, bytesTotal) {
 }
 
 function formatFileSize(bytes) {
-	if (bytes == 0) { return "0 B"; }
+	if (bytes === 0) { return "0 B"; }
 	var e = Math.floor(Math.log(bytes) / Math.log(1024));
 	return (bytes/Math.pow(1024, e)).toFixed(2)+' '+' KMGTP'.charAt(e)+'B';
 }

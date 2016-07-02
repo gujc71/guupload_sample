@@ -2,7 +2,7 @@
 	A simple class for manager gu-upload and SWFUpload
 */
 
-var isrun_gu = typeof FormData !== "undefined"
+var isrun_gu = typeof FormData !== "undefined";
 
 var getScriptURL = (function() {
     var scripts = document.getElementsByTagName('script');
@@ -13,7 +13,7 @@ var getScriptURL = (function() {
 
 function loadScript(filename){
 	document.write('<script type="text/javascript" src="' + filename + '"></script>');
-};
+}
 
 function loadScripts(){
 	var scriptPath = getScriptURL();
@@ -61,7 +61,7 @@ var guTool = {
 	    var s = src.style;
 	    for (var item in styles) s[item] = styles[item];
 	}
-}		
+};		
 
 /*
  * param
@@ -99,7 +99,7 @@ var guUploadManager = function(option) {
 		filetag.setAttribute("multiple", "multiple");
 		var browseBtn = guTool.createTextBox("button", guupload, "browseBtn", true);
 		browseBtn.setAttribute("value", "Browse");
-		addEvent("click", browseBtn, function(){filetag.click()});
+		addEvent("click", browseBtn, function(){filetag.click();});
 		
 		var settings = {
 				listtype: option.listtype,		// list, thumbnail
@@ -153,7 +153,7 @@ guUploadManager.prototype.formSubmit = function() {
 	filesize.value = this.filesize;
 	
 	this.form.submit();
-}
+};
 
 guUploadManager.prototype.uploadFiles = function() {
 	if (isrun_gu){
@@ -167,17 +167,18 @@ guUploadManager.prototype.uploadFiles = function() {
 			 this.uploader.startUpload();
 		else this.formSubmit();
 	}
-}
+};
+
 guUploadManager.prototype.setUploadedFileInfo = function(filename, realname, filesize) {
 	this.filename += filename + ",";
 	this.filesize += filesize + ",";
 	this.realname += realname + ",";	
-}
+};
 
 guUploadManager.prototype.uploadSuccess = function(file, serverData) {
 	guUploadManager.instances.setUploadedFileInfo(file.name, file.size, serverData);
 	guUploadManager.instances.uploadFiles(); // until all files are uploaded
-}
+};
 
 guUploadManager.prototype.uploadSuccessSWF = function(file, serverData) {
 	var progress = new FileProgress(file, guUploadManager.instances.uploader.customSettings.progressTarget);
@@ -187,5 +188,5 @@ guUploadManager.prototype.uploadSuccessSWF = function(file, serverData) {
 
 	guUploadManager.instances.setUploadedFileInfo(file.name, file.size, serverData);
 	guUploadManager.instances.uploadFiles(); // until all files are uploaded
-}
+};
 
