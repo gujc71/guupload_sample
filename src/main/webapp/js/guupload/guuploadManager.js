@@ -65,60 +65,70 @@ var guTool = {
 
 /*
  * param
- * 	 - option: fileid, uploadURL, form
+ * 	 - option: fileid, uploadURL, callback function(afterFileTransfer), maxFileSize, maxFileCount
  */ 
 var guUploadManager = function(option) {
-	guUploadManager.instances = this;			
+	guUploadManager.instances = this;
+
 	this.filename = "";
 	this.filesize = "";
 	this.realname = "";	
 	
-	var guupload   = document.getElementById(option.fileid);
-
+	this.afterFileTransfer = option.afterFileTransfer;
+	if (!option.maxFileSize) option.maxFileSize=20;
+	if (!option.maxFileCount) option.maxFileCount=10;
+		
+	var guupload = document.getElementById(option.fileid);
+	guupload.className += "guupload";
+	
 	var guFileList = null;
 	if (option.listtype!=="thumbnail" || !isrun_gu) {
 		var uploadHead = guTool.createElement("div", guupload, "uploadHead");
-		var fileHead   = guTool.createElement("div", uploadHead, "uploadcolumn", {width: "72%"}, "File Name");
-		var sizeHead   = guTool.createElement("div", uploadHead, "uploadcolumn", {width: "23%"}, "File Size");
-		guFileList = guTool.createElement("div", guupload, "guFileList", {height: "100px"});
+		var fileHead   = guTool.createElement("div", uploadHead, "filenameColumn", {}, "File Name");
+		var sizeHead   = guTool.createElement("div", uploadHead, "filesizeColumn", {}, "File Size");
+		guFileList = guTool.createElement("div", guupload, "guFileList");
 	} else {	
-		guFileList = guTool.createElement("div", guupload, "guFileList_thumbnail", {height: "100%"});
+		guFileList = guTool.createElement("div", guupload, "guFileList_thumbnail");
 	}
 	guFileList.id = "guFileList";
 	
-	if (!isrun_gu){
-		var controlButtons = guTool.createElement("div", guupload);
-		var swfbutton = guTool.createElement("span", controlButtons);
-		swfbutton.id="swfbutton";
-	}
-	this.form = option.form;
-
 	var scriptPath = getScriptURL();
+	
 	if (isrun_gu){
-		var filetag   = guTool.createTextBox("file",   this.form);
+		var filetag   = guTool.createTextBox("file", guupload);
 		filetag.setAttribute("multiple", "multiple");
-		var browseBtn = guTool.createTextBox("button", guupload, "browseBtn", true);
-		browseBtn.setAttribute("value", "Browse");
-		addEvent("click", browseBtn, function(){filetag.click();});
+		
+		if (option.useButtons!==false) {
+			var browseBtn = guTool.createTextBox("button", guupload, "browseBtn", true);
+			browseBtn.setAttribute("value", "Browse");
+			addEvent("click", browseBtn, function(){filetag.click();});
+		}
+		addEvent("dblclick", guFileList, function(){filetag.click();});
 		
 		var settings = {
 				listtype: option.listtype,		// list, thumbnail
 				upload_url: option.uploadURL,
-				file_size_limit : 20*1024*1024, 		// 20M
+				file_size_limit : option.maxFileSize*1024*1024, 		// 20M
+				file_size_limit_str: option.maxFileSize,
+				maxFileCount: option.maxFileCount,
 				fileTag : filetag,
 				fileListview: "guFileList",
 				upload_progress_handler: uploadProgress,
 				upload_success_handler : this.uploadSuccess
 		};
-		guFileList.innerHTML = '<div style="width:99%; line-height: 99px;text-align: center;vertical-align: middle;">Drag files here.</div>';
+		guFileList.innerHTML = '<div class="dragMessage">Drag files here.</div>';
 
 		this.uploader = new GUUpload(settings);
 	} else {
+		var controlButtons = guTool.createElement("div", guupload);
+		var swfbutton = guTool.createElement("span", controlButtons);
+		swfbutton.id="swfbutton";
+		
 		var settings = {
 			flash_url : scriptPath + "swfupload/swfupload.swf",
 			upload_url: option.uploadURL,
 			custom_settings : {progressTarget : "guFileList",cancelButtonId : "btnCancel"},
-			file_size_limit : "20 MB",
+			file_size_limit : option.maxFileSize + " MB",
 			// Button settings
 			button_placeholder_id: "swfbutton",
 			button_image_url: scriptPath + "css/swfbutton.png",
@@ -137,22 +147,14 @@ var guUploadManager = function(option) {
 	return this;
 };
 
-guUploadManager.prototype.formSubmit = function() {
+guUploadManager.prototype.transferComplete = function() {
 	if (this.realname.length > 0) {
 		this.realname = this.realname.substring(0, this.realname.length-1);
 		this.filename = this.filename.substring(0, this.filename.length-1);
 		this.filesize = this.filesize.substring(0, this.filesize.length-1);
 	}
 	
-	var realname = guTool.createTextBox("hidden", this.form, "realname");
-	var filename = guTool.createTextBox("hidden", this.form, "filename");
-	var filesize = guTool.createTextBox("hidden", this.form, "filesize");
-
-	realname.value = this.realname;
-	filename.value = this.filename;
-	filesize.value = this.filesize;
-	
-	this.form.submit();
+	if (this.afterFileTransfer) this.afterFileTransfer(this.realname, this.filename, this.filesize);
 };
 
 guUploadManager.prototype.uploadFiles = function() {
@@ -160,12 +162,12 @@ guUploadManager.prototype.uploadFiles = function() {
 		if (this.uploader.files_queued()>0) 
 			 this.uploader.uploadFiles();
 		else
-		if (this.uploader.isUploaded()) this.formSubmit();
+		if (this.uploader.isUploaded()) this.transferComplete();
 	} else {
 		var stats = this.uploader.getStats();
 		if (stats.files_queued>0) 
 			 this.uploader.startUpload();
-		else this.formSubmit();
+		else this.transferComplete();
 	}
 };
 

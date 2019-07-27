@@ -7,7 +7,11 @@
  *
  * guupload 0.2 is (c) 2016 gujc and is released under the MIT License: added thumbnail view
  *
+ * guupload 0.3 is (c) 2019 gujc and is released under the MIT License: refactoring
  */
+
+const MSG_MAXFILESIZE = "{0} is too big to upload! (Max {1}M)";
+const MSG_MAXFILECOUNT = "You can add up to {0} files.";
 
 var GUUpload = function (settings) {
 	this.fileCount=0;
@@ -36,6 +40,11 @@ function fileRecord (oid, ofile){
 
 
 GUUpload.prototype.AddFiles = function (files) {
+	if (this.fileCount+files.length> this.settings.maxFileCount) {
+		alert( MSG_MAXFILECOUNT.format(this.settings.maxFileCount) );
+		return;
+	}
+	
 	if (this.fileCount===0){
 		var fileListview = document.getElementById(this.settings.fileListview);
 		fileListview.innerHTML = "";
@@ -48,7 +57,7 @@ GUUpload.prototype.AddFiles = function (files) {
 
 GUUpload.prototype.AddFile = function (file) {
 	if (this.settings.file_size_limit>0 & file.size > this.settings.file_size_limit){
-		alert(file.name + " is too big to upload!");
+		alert( MSG_MAXFILESIZE.format(file.name, this.settings.file_size_limit_str) );
 		return;
 	}
 	
@@ -78,7 +87,7 @@ GUUpload.prototype.AddRow = function (file) {
 
 	var filesize = guTool.createElement("div", filesizeContainer, "filesize");
 	filesize.innerHTML = formatFileSize(file.size);
-	file.progressbar = filesize;
+	file.progressbar = filesize; 
 	
 };
 
@@ -108,7 +117,7 @@ GUUpload.prototype.AddRowThunbnail = function (file) {
 	addEvent("click", fileremove, this.fileRemoveClick);
 
 	var filesize = guTool.createElement("div", filesizeContainer, "filesize");
-	filesize.innerHTML = file.name;//formatFileSize(file.size);
+	filesize.innerHTML = file.name;
 	file.progressbar = filesize;
 	
 };
@@ -134,6 +143,12 @@ GUUpload.prototype.fileRemoveClick = function () {
 };
 
 GUUpload.prototype.uploadFiles = function () {
+	var fileremoveBtns = document.getElementsByClassName("fileremove");
+	var i;
+	for (i = 0; i < fileremoveBtns.length; i++) {
+		fileremoveBtns[i].style.display = "none";
+	} 
+	
 	for(var f in this.fileList) {
 		var file = this.fileList[f];
 		if (file.uploaded !== 0) continue;
@@ -147,6 +162,7 @@ GUUpload.prototype.uploadFiles = function () {
 		xhr.id=file.id;
 		xhr.open("POST", this.settings.upload_url, true);
 		xhr.setRequestHeader("Cache-Control", "no-cache");
+		xhr.setRequestHeader("enctype", "multipart/form-data");
 		xhr.onreadystatechange = ajaxReadyStateChange;
 		if (typeof this.settings["upload_progress_handler"] === "function") {
 			xhr.upload.id = xhr.id;
@@ -181,7 +197,6 @@ function ajaxProgress(evt) {
 		GUUpload.instances.queueEvent("upload_progress_handler", [file, evt.loaded, evt.total]);
 	}
 }
-
 
 function ajaxReadyStateChange() {
     if (this.readyState === 4) {
@@ -254,6 +269,13 @@ function uploadProgress(file, bytesLoaded, bytesTotal) {
 function formatFileSize(bytes) {
 	if (bytes === 0) { return "0 B"; }
 	var e = Math.floor(Math.log(bytes) / Math.log(1024));
-	return (bytes/Math.pow(1024, e)).toFixed(2)+' '+' KMGTP'.charAt(e)+'B';
+	return (bytes/Math.pow(1024, e)).toFixed(1)+' '+' KMGTP'.charAt(e)+'B';
 }
 
+String.prototype.format = function () {
+    var a = this;
+    for (var k in arguments) {
+        a = a.replace(new RegExp("\\{" + k + "\\}", 'g'), arguments[k]);
+    }
+    return a
+}

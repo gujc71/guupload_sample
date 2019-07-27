@@ -7,15 +7,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=8" />
 
 <link rel="stylesheet" type="text/css" href="js/guupload/css/guupload.css"/>
-<script type="text/javascript" src="js/guupload/guUploadManager.js"></script>
+<script type="text/javascript" src="js/guupload/guuploadManager.js"></script>
 <script type="text/javascript">
 var guManager=null;
 
 window.onload = function() {
 	var option = {
-			fileid: "guupload",
-			uploadURL: "upload",
-			form: document.form1
+		fileid: "attachFile",
+		uploadURL: "upload",
+		afterFileTransfer: afterFileTransfer
 	}
 	guManager = new guUploadManager(option);
 }	
@@ -23,6 +23,18 @@ window.onload = function() {
 function formSubmit(){
 	guManager.uploadFiles();
 }
+function afterFileTransfer(realname, filename, filesize){
+	var realname9 = document.getElementById( 'realname' );
+	var filename9 = document.getElementById( 'filename' );
+	var filesize9 = document.getElementById( 'filesize' );
+	
+	realname9.value = realname;
+	filename9.value = filename;
+	filesize9.value = filesize;
+	
+	document.form1.submit();
+}
+
 </script>
 </head>
 <body>
@@ -30,7 +42,7 @@ function formSubmit(){
 <div id="content">
 	<h2>Board</h2><br/>
 	<form id="form1" name="form1" action="upload_save.jsp" method="post">
-      	<table cellspacing="0" cellpadding="0"   width="700px">
+      	<table cellspacing="0" cellpadding="0" width="700px">
         <colgroup>
         <col width="15%"/>
         <col/>
@@ -46,12 +58,14 @@ function formSubmit(){
 		<tr>
 			<td>Attach File</td>
 			<td>
-				<div id="guupload" class="guupload" style="width: 500px; height: 120px;">
-				</div>
+				<div id="attachFile" style="width: 500px;"></div>
 			</td>
 		</tr>
 		</table>
 		<input type="button" value="Submit" onclick='formSubmit()'  />
+		<input type="hidden" id="realname" name="realname"/>
+		<input type="hidden" id="filename" name="filename"/>
+		<input type="hidden" id="filesize" name="filesize"/>		
 	</form>
 </div>
 </body>
