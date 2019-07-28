@@ -6,8 +6,8 @@
 <title>GUUpload Demos</title>
 <meta http-equiv="X-UA-Compatible" content="IE=8" />
 
-<link rel="stylesheet" type="text/css" href="js/guupload/css/guupload.css"/>
-<script type="text/javascript" src="js/guupload/guuploadManager.js"></script>
+<link rel="stylesheet" type="text/css" href="js/gu-upload/css/guupload.css"/>
+<script type="text/javascript" src="js/gu-upload/guuploadManager.js"></script>
 <script type="text/javascript">
 var guManager=null;
 

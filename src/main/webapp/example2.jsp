@@ -4,8 +4,8 @@
 <html>
 <head>
 <title>GUUpload Demos</title>
-<link rel="stylesheet" type="text/css" href="js/guupload/css/guupload.css"/>
-<script type="text/javascript" src="js/guupload/guuploadManager.js"></script>
+<link rel="stylesheet" type="text/css" href="js/gu-upload/css/guupload.css"/>
+<script type="text/javascript" src="js/gu-upload/guuploadManager.js"></script>
 <script type="text/javascript">
 var guManager=null;
 

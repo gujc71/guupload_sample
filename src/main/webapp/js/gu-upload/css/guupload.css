@@ -1,0 +1,250 @@
+.guupload {
+	font-size: 10pt;
+}
+
+.guFileList {
+	width: 100%;
+	height: 100px;
+	overflow-y: scroll;
+	border:1px solid #999999;
+}
+
+.guFileList_thumbnail {
+	height: 140px;
+	width: 100%;
+	overflow-x: scroll;
+	overflow-y: hidden;
+	border:1px solid #999999;
+	white-space: nowrap;
+}
+ 
+/* -- gu-upload Styles ------------------------------- */
+.guFileList .filerow {  /* SWFUpload: progressWrapper+ progressContainer*/ 
+	overflow: hidden;
+	margin: 1px;
+	padding: 3px;
+	border: solid 1px #E8E8E8;
+	background-color: #F7F7F7;
+}
+
+.guFileList_thumbnail .filerow {
+	width: 100px;
+	height: 91%;
+	overflow: hidden;
+	margin: 3px; 
+	padding: 1px;
+	border: solid 1px #E8E8E8;
+	background-color: #F7F7F7;
+	display: inline-block;
+}
+
+.guFileList .filename { /*SWFUpload: progressName*/
+ 	width: calc(99% - 110px);
+	float: left;
+	color: #555;
+	text-align: left;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+ 
+.guFileList_thumbnail .filename{ 
+	width: 100%;
+	height: 75%;
+	overflow: hidden;
+	border-radius: 5px;
+}
+
+.guFileList_thumbnail .noimage{
+	text-align: center;
+	line-height: 500%;
+	font-weight: bold;
+	color: #3446EB;
+	background-image: url(file.png);
+	background-repeat: no-repeat;
+	background-position:center;
+}
+
+.guFileList .filerow .filesizeContainer { /*SWFUpload: progressBarStatus*/
+	float: right;
+	width: 110px;
+	white-space: nowrap;
+	text-align: right;
+}
+.guFileList_thumbnail .filerow .filesizeContainer { /*SWFUpload: progressBarStatus*/
+	margin-top: 2px;
+	width: 100%;
+	white-space: nowrap;
+}
+
+.guFileList .filerow .filesize { 
+	margin-right: 20px;
+	width: auto;
+	text-align: right;
+}
+
+.guFileList_thumbnail .filerow .filesize { 
+	margin-right: 20px;
+	width: auto;
+	text-align: center;
+	overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+}
+
+.filerow .fileremove {	/*SWFUpload: a.progressCancel*/
+	float: right;
+	height: 14px;
+	width: 14px;
+	background-image: url(removeFile.png);
+	background-repeat: no-repeat; 
+	margin-top: 3px;
+}
+
+.filerow .progressBar {
+	width: 0%; 
+	background-color: #337ab7;
+}
+
+.dragMessage {
+	display: block;
+	_width:99%; 
+	_line-height: 99px;
+	text-align:center;
+	vertical-align: middle;
+	margin-top: 37px;
+}
+/* -- SWFUpload Object Styles ------------------------------- */
+.progressWrapper {
+	overflow: hidden;
+}
+
+.progressContainer {
+	margin: 1px;
+	padding: 1px;
+	border: solid 1px #E8E8E8;
+	background-color: #F7F7F7;
+	overflow: hidden;
+}
+/* Message */
+.message {
+	margin: 1em 0;
+	padding: 10px 20px;
+	border: solid 1px #FFDD99;
+	background-color: #FFFFCC;
+	overflow: hidden;
+}
+/* Error */
+.red {
+	border: solid 1px #B50000;
+	background-color: #FFEBEB;
+}
+
+/* Current */
+.green {
+	border: solid 1px #DDF0DD;
+	background-color: #EBFFEB;
+}
+
+/* Complete */
+.blue {
+	border: solid 1px #CEE2F2;
+	background-color: #F0F5FF;
+}
+
+.progressName {
+	float: left;
+	font-size: 9pt;
+	color: #555;
+	width: 75%;
+	text-align: left;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.progressBarInProgress,
+.progressBarComplete,
+.progressBarError {
+	font-size: 9pt;
+	width: 0%;
+	height: 2px;
+	background-color: blue;
+	margin-top: 2px;
+}
+
+.progressBarComplete {
+	float: left;
+	width: 15%;
+	background-color: green;
+	visibility: hidden;
+}
+
+.progressBarError {
+	width: 100%;
+	background-color: red;
+	visibility: hidden;
+}
+
+.progressBarStatus {
+	float: right;
+	margin-top: 2px;
+	width: 15%;
+	font-size: 9pt;
+	text-align: left;
+	white-space: nowrap;
+}
+
+a.progressCancel {
+	font-size: 0;
+	display: block;
+	height: 14px;
+	width: 14px;
+	background-image: url(cancelbutton.gif);
+	background-repeat: no-repeat;
+	background-position: -14px 0px;
+	float: right;
+}
+
+a.progressCancel:hover {
+	background-position: 0px 0px;
+}
+
+
+_.swfupload {
+	vertical-align: top;
+}
+
+.uploadHead {
+	width: 100%;
+	position: relative;
+    border-color: #C6C6C7;
+    border-style: solid;
+    border-width: 1px;
+    background: url("bg_uploadhead.gif") repeat-x scroll 0 0 rgba(0, 0, 0, 0);
+    height: 18px;
+    letter-spacing: -1px;
+    line-height: 18px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.uploadHead .uploadcolumn {
+	border: 0 none;
+	float:left;
+	text-align: center;
+	border-left: 1px solid #DDDDDD;
+}
+
+.uploadHead .filenameColumn {
+	width: calc(99% - 130px);
+	border: 0 none;
+	float:left;
+	text-align: center;
+	border-left: 1px solid #DDDDDD;
+}
+
+.uploadHead .filesizeColumn {
+	width: 130px;
+	border: 0 none;
+	float:left;
+	text-align: center;
+	border-left: 1px solid #DDDDDD;
+}
