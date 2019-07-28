@@ -26,3 +26,7 @@ Examples
 There is a web project with some simple examples of using guupload with Java(Spring 4).
 
 You can get download through other [github](https://github.com/gujc71/guupload_sample "guupload sample") page.
+
+
+### License ###
+MIT
