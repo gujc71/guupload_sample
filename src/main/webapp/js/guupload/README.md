@@ -21,7 +21,7 @@ Features
     File Upload Progress
     List & Thumbnail mode
 
-Demos 
+Example 
 
 Several simple demos are provided to illustrate aspects of using the guupload with Java (Spring 4). 
 

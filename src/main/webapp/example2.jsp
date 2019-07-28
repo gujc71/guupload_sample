@@ -22,6 +22,11 @@ window.onload = function() {
 }	
 
 function formSubmit(){
+	var brd_title = document.getElementById( 'brd_title' );
+	if (brd_title.value==="") {
+		alert("input!");
+		return;
+	}
 	guManager.uploadFiles();
 }
 
@@ -51,7 +56,7 @@ function afterFileTransfer(realname, filename, filesize){
         </colgroup>
         <tr>
 			<td>Title</td>
-			<td><input type="text" name="brd_title"/></td>
+			<td><input type="text" id="brd_title" name="brd_title"/></td>
 		</tr>
         <tr>
 			<td>Contents</td>
